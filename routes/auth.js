@@ -2,6 +2,7 @@ var express = require('express');
 var router  = express.Router();  
 var User    = require('../models/user');
 var passport= require('passport');
+require('dotenv');
 
 //ADMIN REGISTRATION
 router.get("/register/admin", function (req,res) {
@@ -63,7 +64,7 @@ router.get("/logout", function (req,res) {
 
 function admin(key,req,res)
 {
-    if(key==="1MB@tm@n")
+    if(key===process.env.ADMIN_KEY)
         return true;
     else{
         return false;

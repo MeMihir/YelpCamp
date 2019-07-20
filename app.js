@@ -10,7 +10,8 @@ var express         = require('express'),
     Comment         = require('./models/comments'),
     methodOverride  = require('method-override'),
     flash           = require('connect-flash')
-app.locals.moment   = require('moment');
+app.locals.moment   = require('moment'),
+    require('dotenv').config();
 
 var siteRoutes      = require('./routes/sites'),
     commentsRoutes  = require('./routes/comments'),
@@ -18,7 +19,7 @@ var siteRoutes      = require('./routes/sites'),
     indexRoutes     = require('./routes/index'),
     usersRoutes     = require('./routes/users');
 
-mongoose.connect("mongodb://localhost:27017/yelp_camp",{useNewUrlParser:true});
+mongoose.connect(process.env.DB_URL,{useNewUrlParser:true});
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine","ejs");   
 app.use(methodOverride("_method"));
@@ -27,7 +28,7 @@ app.use(flash());
 
 //PASSPORT CONFIG
 app.use(require("express-session")({
-    secret : "Bruce Wayne is BATMAN",
+    secret : process.env.SECRET,
     resave: false, 
     saveUninitialized : false
 }));
