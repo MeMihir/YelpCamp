@@ -1,0 +1,42 @@
+
+<% include ../partials/header %>
+
+<div class="d-flex justify-content-center">
+        
+    <div>    
+    <h1 class="display-7">Add new unExplored spots</h1>
+    <p class="lead">Add any unSeen and unExplored area you know of</p>
+    
+ 
+    <form action="/spots" method="post" style="max-width: 30rem;">
+        
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" >Name</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Sizing example input" name="name" aria-describedby="inputGroup-sizing-default">
+        </div>
+        
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Image URL</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Sizing example input" name="image" aria-describedby="inputGroup-sizing-default">
+        </div>
+        
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Details</span>
+            </div>
+            <textarea class="form-control" name="info" aria-label="With textarea"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-outline-success btn-md mb-3 btn-block">Submit</button>
+    </form>
+
+    <div><a href="/spots" class="btn btn-primary btn-sm mt-2">BACK</a></div>
+
+    </div>
+</div>
+<% include ../partials/footer %>
+

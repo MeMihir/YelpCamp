@@ -1,0 +1,30 @@
+<% include ../partials/header %>
+
+<h1>THIS IS THE EDIT PAGE</h1>
+
+<form action="/spots/<%= site._id %>?_method=put" method="post">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" >Name</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Sizing example input" value="<%= site.name %>" name="name" aria-describedby="inputGroup-sizing-default">
+    </div>
+    
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Image URL</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Sizing example input" value="<%= site.image %>" name="image" aria-describedby="inputGroup-sizing-default">
+    </div>
+    
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Details</span>
+        </div>
+        <textarea class="form-control" name="info" aria-label="With textarea"><%= site.info %></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-outline-success btn-md mb-3 btn-block">Submit</button>
+</form>
+<% include ../partials/footer %>
+

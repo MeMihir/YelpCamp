@@ -1,0 +1,33 @@
+<% include ../partials/header.ejs %>
+
+<div class="d-flex justify-content-centre"></div>
+<div class="card mb-3 text-white bg-dark" style="max-width: 540px;">
+    <div class="row no-gutters">
+    <div class="col-md-4">
+        <img src="<%= user.profilePic %>" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+        <div class="card-body">
+        <h5 class="card-title"><%= user.username %></h5>
+        <h6 class="card-text"><%= user.firstName %>  <%= user.lastName %></h6>
+        <h6 class="card-text">Email: <%= user.email %></h6>
+        <h6 class="card-text">Submitted <%= user.sites.length %> spots </h6>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="card-deck">
+    <% user.sites.forEach(function(site){ %>
+    <div class="card text-white bg-dark" style="max-width: 25rem">
+        <img src="<%= site.image %>" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title"><%= site.name %></h5>
+            <p class="card-text"><%= site.info.substring(0,100) %>...</p>
+            <a href="/spots/<%= site._id %>" class="btn btn-primary"> Check it Out </a>
+        </div>
+    </div>
+    <% }) %>
+</div>
+
+<% include ../partials/footer.ejs %>

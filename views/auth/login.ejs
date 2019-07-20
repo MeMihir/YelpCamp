@@ -1,0 +1,27 @@
+<% include ../partials/header.ejs %>
+
+<div class="d-flex justify-content-center">
+<div>
+    <h1>Login</h1>
+    <form action="/login" method="post" style="max-width: 30rem;">
+            
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" >Username</span>
+            </div>
+            <input type="text" name="username" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+        
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">password</span>
+            </div>
+            <input type="password" name="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <button type="submit" class="btn btn-outline-success btn-md mb-3 btn-block">Log In</button>
+    </form>
+    <div><a href="/spots" class="btn btn-primary btn-sm mt-2">BACK</a></div>
+</div>
+</div>
+<% include ../partials/footer.ejs %>

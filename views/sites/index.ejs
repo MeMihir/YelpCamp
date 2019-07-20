@@ -1,0 +1,33 @@
+<% include ../partials/header.ejs %>
+
+<div class="jumbotron d-flex flex-column justify-content-center">
+    <h1 class="display-4">Spots near you</h1>
+    <p class="lead">Search for unSeen, unExplored areas to visit near you</p>
+    <p>
+        <form class="form-inline" action="/spots" method="GET">
+            <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </p>
+    <hr class="my-4">
+    <p>Know a spot of your own?</p>
+    <a class="btn btn-primary btn-lg" href="spots/new" role="button">Add new Spots</a>
+</div>
+
+<div class="card-columns">
+<% sites.forEach(function(site){ %>
+    <div class="card mx-1 text-white bg-dark" style="max-width: 30rem;">
+        <img class="card-img-top" alt="..." src=<%= site.image %>>
+        <div class="card-body">
+        <h5 class="card-title"> <%= site.name %> </h5>
+        <p class="card-text"><%= site.info.substring(0,100) %>...</p>
+        <a href="/spots/<%= site._id %>" class="btn btn-primary"> Check it Out </a>
+        </div>
+    </div>
+<% }) %>
+</div>
+
+<div><a href="/" class="btn-primary btn-lg mt-2">BACK</a></div>
+
+
+<% include ../partials/footer.ejs %>

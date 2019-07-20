@@ -1,0 +1,20 @@
+<% include partials/header.ejs %>
+
+
+<div class="container">
+    <div class="jumbotron d-flex flex-column justify-content-center">
+        <h1 class="display-4">YelpCamp</h1>
+        <p class="lead">Search for unSeen, unExplored areas to visit near you</p>
+        <hr class="my-4">
+        <p>Search for them now.</p>
+        <p>
+            <form class="form-inline" action="/spots" method="GET">
+                <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </p>
+        <a class="btn btn-primary btn-lg" href="spots" role="button">View All Spots</a>
+    </div>
+</div>
+
+<% include partials/footer.ejs %>

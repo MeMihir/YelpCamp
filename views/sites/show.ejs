@@ -1,0 +1,74 @@
+<% include ../partials/header.ejs %>
+
+<div class="row mt-5 d-flex justify-content-between">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-12 col-xs-12 row">
+        <div class="card mb-12 col-xl-12 col-lg-12 col-md-6 col-6 col-xs-6" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">LOCATION</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card mb-12 col-xl-12 col-lg-12 col-md-6 col-6 col-xs-6" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">MORE IMAGES</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-8 col-lg-8 col-md-12 col-12 col-xs-12">
+        <div class="card mb-3">
+            <img src="<%= site.image %>" class="card-img-top" alt="...">
+            <hr>
+            <div class="card-body">
+                <h5 class="card-title"> <%= site.name %> </h5>
+                <p class="card-text"><%= site.info %></p>
+                <p class="card-text"> <a href="/user/<%= site.uploader.id %>" > <small class="text-muted">Submitted By <%= site.uploader.username %>, <%= moment(site.createdAt).fromNow() %></small></a></p>
+                <% if(currUser!==undefined && (currUser.username===site.uploader.username || currUser.isAdmin===true)){ %>
+                <hr>
+                <div class="row d-flex justify-content-around">
+                    <a href="/spots/<%= site._id %>/edit" class="btn btn-warning mr-5">EDIT</a>
+
+                    <form action="/spots/<%= site._id %>?_method=delete" method="post">
+                        <input type="submit" class="btn btn-danger" value="DELETE">
+                    </form>
+                </div>
+                <% } %>
+            </div>
+        </div>              
+    </div>
+</div>
+
+<!-- COMMENTS SECTION -->
+<div class="d-flex justify-content-around mt-3">
+<div class="card  col-xl-10 col-lg-10 col-md-12 col-12 col-xs-12">
+<ul class="list-group list-group-flush">
+    <% site.comments.forEach(function(comment){ %>
+    <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+                <h6><%= comment.author.username %></h6>
+                <small><%= moment(comment.createdAt).fromNow() %></small>
+            </div>
+        <p><%= comment.text %></p>
+        <% if(currUser!==undefined && (currUser.username===comment.author.username || currUser.isAdmin===true)){ %>
+            <div class="d-flex">
+                <a href="/spots/<%= site._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning btn-sm mr-2">Edit</a>
+                <form action="/spots/<%= site._id %>/comments/<%= comment._id %>?_method=delete" method="post">
+                    <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                </form>
+            </div>
+        <% } %>
+    </li>
+    <% }) %>
+    <li class="list-group-item justify-content-center">
+        <div><a href="/spots/<%= site._id %>/comments/new" class="btn btn-info mt-2">ADD NEW COMMENT</a></div>
+    </li>
+</ul>
+</div>
+</div>
+      
+<div><a href="/spots" class="btn-primary btn-lg mt-2">BACK</a></div>
+<% include ../partials/footer.ejs %>
+

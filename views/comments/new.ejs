@@ -1,0 +1,24 @@
+<% include ../partials/header %>
+
+<div class="d-flex justify-content-center">
+        
+    <div>    
+    <h1 class="display-7">Add Commnets to <%= site.name %></h1>
+    
+    <form action="/spots/<%= site._id %>/comments" method="post" style="max-width: 30rem;">
+        
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" >Comment</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Sizing example input" name="comment[text]" aria-describedby="inputGroup-sizing-default">
+        </div>
+        
+        <button type="submit" class="btn btn-outline-success btn-md mb-3 btn-block">Submit</button>
+    </form>
+
+    <div><a href="/spots/<%= site._id %>" class="btn-primary btn-sm mt-2">BACK</a></div>
+
+    </div>
+</div>
+<% include ../partials/footer %>
