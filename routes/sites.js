@@ -3,6 +3,29 @@ var router          = express.Router({mergeParams: true});
 var Site            = require('../models/site');
 var User            = require('../models/user');
 var middleware      = require('../middleware');
+var multer          = require('multer');
+var cloudinary      = require('cloudinary');
+
+//UPLOAD CONFIG
+var storage         = multer.diskStorage({
+    filename    : (req, file, callback) => {
+        callback(null, Date.now() + file.originalname);
+    }
+});
+var imageFilter     = (req, file, callback) => {
+    if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return callback( new Error('Only image file are allowed'), false);
+    }
+    callback(null, true);
+};
+var upload          = multer({ storage : storage, fileFilter : imageFilter});
+
+//CLOUDINARY CONFIG
+cloudinary.config({
+    cloud_name  : 'mi7cloud',
+    api_key     : process.env.CLOUDINARY_API_KEY,
+    api_secret  : process.env.CLOUDINARY_SECRET
+})
 
 //INDEX
 router.get("/",function (req,res) {
@@ -38,34 +61,47 @@ router.get("/",function (req,res) {
 })
 
 //CREATE
-router.post("/",middleware.isLoggedIn, function (req,res) {
-    var author={
-        id: req.user._id,
-        username: req.user.username
-    }
-    var newSite={
-        name: req.body.name,
-        image: req.body.image,
-        info: req.body.info,
-        uploader: author
-    }
+router.post("/",middleware.isLoggedIn, upload.single('image'),function (req,res) {
+    cloudinary.v2.uploader.upload(req.file.path , (err,result) => {
 
-    Site.create(newSite,function (err,site) {
-        if(err)
-        {
-            req.flash("error","Something went wrong!");
-            res.redirect("/spots");
-            console.log(err);
+        if (err) {
+            req.flash('error',err.message);
+            res.redirect('back');
         }
-        else{
-            User.findById(newSite.uploader.id,function (err,user) {
-                user.sites.push(site);
-                user.save();
-                req.flash("success","Site created Sucessfully!");
-                res.redirect("/");
-            })
+
+        var author={
+            id: req.user._id,
+            username: req.user.username
         }
+
+        var newSite={
+            name: req.body.name,
+            info: req.body.info,
+            image : result.secure_url,
+            imageID : result.public_id,
+            uploader: author
+        }
+
+        
+        Site.create(newSite,function (err,site) {
+
+            if(err)
+            {
+                req.flash("error","Something went wrong!");
+                res.redirect("/spots");
+                console.log(err);
+            }
+            else{
+                User.findById(newSite.uploader.id,function (err,user) {
+                    user.sites.push(site);
+                    user.save();
+                    req.flash("success","Site created Sucessfully!");
+                    res.redirect("/");
+                })
+            }
+        })
     })
+    
 })
 
 // NEW

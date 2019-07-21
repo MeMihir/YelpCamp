@@ -3,6 +3,7 @@ var mongoose=require('mongoose');
 var siteSchema=new mongoose.Schema({
     name: String,
     image: String,
+    imageId : String,
     info: String,
     createdAt : { type: Date, default: Date.now},
     uploader: {
