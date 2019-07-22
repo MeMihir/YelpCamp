@@ -6,8 +6,12 @@ var UserSchema= new mongoose.Schema({
     password    : String,
     firstName   : String,
     lastName    : String,
-    email       : String,
+    email       : {type :String, unique : true},
     profilePic  : String,
+    isVerified  : {
+        type : Boolean,
+        default : false
+    },
     isAdmin     : {
         type : Boolean,
         default: false
