@@ -78,7 +78,7 @@ router.post("/",middleware.isLoggedIn, upload.single('image'),function (req,res)
             name: req.body.name,
             info: req.body.info,
             image : result.secure_url,
-            imageID : result.public_id,
+            imageId : result.public_id,
             uploader: author
         }
 
@@ -138,20 +138,29 @@ router.get("/:id/edit",middleware.siteAuthorization,function (req,res) {
 })
 //UPDATE
 router.put("/:id",middleware.siteAuthorization,function (req,res) {
-    Site.findByIdAndUpdate(req.params.id,req.body,function (err,site) {
+    Site.findById(req.params.id, async function(err, site){
         if(err){
-            console.log(err);
-            req.flash("error","Something went wrong!");
-            res.redirect("/spots");
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            if (req.file) {
+              try {
+                  await cloudinary.v2.uploader.destroy(site.imageId);
+                  var result = await cloudinary.v2.uploader.upload(req.file.path);
+                  site.imageId = result.public_id;
+                  site.image = result.secure_url;
+              } catch(err) {
+                  req.flash("error", err.message);
+                  return res.redirect("back");
+              }
+            }
+            site.name = req.body.name;
+            site.info = req.body.info;
+            site.save();
+            req.flash("success","Successfully Updated!");
+            res.redirect("/spots/" + site._id);
         }
-        else if (!site) {
-            return res.status(400).send("Item not found.")
-        }
-        else {
-            req.flash("success","Site updated Sucessfully!");
-            res.redirect("/spots/"+ site._id);
-        }
-    })
+    });
 })
 
 //DELETE
@@ -163,6 +172,7 @@ router.delete("/:id",middleware.siteAuthorization,function (req,res) {
             res.redirect("/spots");
         }
         else{
+            cloudinary.v2.uploader.destroy(site.imageId);
             req.flash("success","Site deleted successfully!");
             res.redirect("/spots");
         }

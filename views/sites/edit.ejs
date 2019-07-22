@@ -2,7 +2,7 @@
 
 <h1>THIS IS THE EDIT PAGE</h1>
 
-<form action="/spots/<%= site._id %>?_method=put" method="post">
+<form action="/spots/<%= site._id %>?_method=put" enctype="multipart/form-data" method="post">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" >Name</span>
@@ -12,9 +12,9 @@
     
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text">Image URL</span>
+            <span class="input-group-text">Image</span>
         </div>
-        <input type="text" class="form-control" aria-label="Sizing example input" value="<%= site.image %>" name="image" aria-describedby="inputGroup-sizing-default">
+        <input type="file" class="form-control" aria-label="Sizing example input" name="image" aria-describedby="inputGroup-sizing-default" accept="image/*">
     </div>
     
     <div class="input-group mb-3">
