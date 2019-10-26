@@ -117,13 +117,13 @@ router.get("/login",function (req,res) {
     res.render("auth/login");
 })
 
-router.post("/login", ,passport.authenticate("local",
+router.post("/login", passport.authenticate("local",
 {
     // successFlash    : req.flash("success","Logged in successfully!"),
     successRedirect : "/spots",
     // failureFlash    : req.flash("error","Your Userid or password is incorrect");
     failureRedirect : "/login"
-}), function (req,res) {})
+}))
 
 
 //LOGOUT ROUTE

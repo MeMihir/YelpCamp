@@ -21,7 +21,7 @@ var siteRoutes      = require('./routes/sites'),
 
 mongoose.connect(process.env.DB_URL,{useNewUrlParser:true});
 app.use(bodyParser.urlencoded({extended:true}));
-app.set("view engine","ejs");   
+app.set("view engine","ejs");
 app.use(methodOverride("_method"));
 app.use(flash());
 // SeedDB(); //SEEDS THE DB

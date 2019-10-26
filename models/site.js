@@ -1,5 +1,5 @@
 var mongoose=require('mongoose');
-
+ 
 var siteSchema=new mongoose.Schema({
     name: String,
     image: String,
